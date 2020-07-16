@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+        <style>
+            #catalog-list li {
+               list-style: none; 
+            }
+        </style>
+    </head>
+    <body>
+
+        <h2>All Products</h2>
+        <ul id="catalog-list" class="row">
+        </ul>
+
+        <hr>
+
+        <h2>Shopping Cart</h2>
+        <p>[cart items]</p>
+
+
+        <hr>
+
+        <h2>Checkout</h2>
+        <p>[pricing calculations]</p>
+
+        <script>
+
+            var catalog = [
+                {
+                    "image": "gray-bottle.jpeg",
+                    "title": "Gray Bottle",
+                    "price": 5.00
+                },
+                {
+                    "image": "red-bottle.jpeg",
+                    "title": "Red Bottle",
+                    "price": 5.00
+                },
+                {
+                    "image": "white-bottle.jpeg",
+                    "title": "White Bottle",
+                    "price": 5.00
+                },
+            ];
+
+            var catalogList = document.getElementById("catalog-list");
+
+            catalog.forEach(function(product) {
+                var li = document.createElement("li");
+                li.className = "col-sm-4";
+
+                var template = `<div class="card mb-4 shadow-sm">
+            <img src="images/${product.image}" class="card-img-top">
+            <div class="card-body">
+              <p class="card-text">
+                ${product.title}
+                <br/>
+                <h4>${product.price}</h4>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-primary">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+
+                li.innerHTML = template;
+
+                catalogList.appendChild(li);
+            });
+            
+        </script>
+    </body>
+</html>
