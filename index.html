@@ -17,7 +17,9 @@
         <hr>
 
         <h2>Shopping Cart</h2>
-        <p>[cart items]</p>
+        <ul id="cart-list">
+            <li>No items in your cart :( Start shopping!</li>
+        </ul>
 
 
         <hr>
@@ -29,21 +31,25 @@
 
             var catalog = [
                 {
+                    "id": 1,
                     "image": "gray-bottle.jpeg",
                     "title": "Gray Bottle",
                     "price": 5.00
                 },
                 {
+                    "id": 2,
                     "image": "red-bottle.jpeg",
                     "title": "Red Bottle",
                     "price": 5.00
                 },
                 {
+                    "id": 3,
                     "image": "white-bottle.jpeg",
                     "title": "White Bottle",
                     "price": 5.00
                 },
             ];
+            var cart = [];
 
             var catalogList = document.getElementById("catalog-list");
 
@@ -51,26 +57,53 @@
                 var li = document.createElement("li");
                 li.className = "col-sm-4";
 
-                var template = `<div class="card mb-4 shadow-sm">
-            <img src="images/${product.image}" class="card-img-top">
-            <div class="card-body">
-              <p class="card-text">
-                ${product.title}
-                <br/>
-                <h4>${product.price}</h4>
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-primary">Add to Cart</button>
-                </div>
-              </div>
-            </div>
-          </div>`;
+                var template = makeCard(product.title, product.image, product.price, product.id);
 
                 li.innerHTML = template;
 
                 catalogList.appendChild(li);
             });
+
+            function makeCard(title, image, price, id) {
+                var template = `<div class="card mb-4 shadow-sm">
+                    <img src="images/${image}" class="card-img-top">
+                    <div class="card-body">
+                    <p class="card-text">
+                        ${title}
+                        <br/>
+                        <h4>${price}</h4>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-primary" onClick="addToCart(${id});">Add to Cart</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>`;
+
+                return template;
+            }
+
+            function addToCart(productId) {
+                console.log("Adding to cart...");
+                var product = catalog[--productId];
+                cart.push(product);
+
+                refreshCart();
+            }
+
+            function refreshCart() {
+                var cartList = document.getElementById("cart-list");
+                cartList.innerHTML = null;
+
+                cart.forEach(function(product) {
+                    var li = document.createElement("li");
+                    li.innerHTML = `${product.title} - $${product.price}`;
+
+                    cartList.appendChild(li);
+                });
+
+            }
             
         </script>
     </body>
