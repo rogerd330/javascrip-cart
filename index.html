@@ -21,11 +21,15 @@
             <li>No items in your cart :( Start shopping!</li>
         </ul>
 
-
         <hr>
 
         <h2>Checkout</h2>
-        <p>[pricing calculations]</p>
+        <ul>
+            <li>Subtotal: <div id="subtotal">0</div></li>
+            <li>Taxes: <div id="tax">0</div></li>
+            <li>Shipping: <div id="shipping">0 </div></li>
+            <li><strong>GRAND TOTAL</strong> <div id="grandTotal">0 </div></li>
+        </ul>
 
         <script>
 
@@ -96,15 +100,39 @@
                 var cartList = document.getElementById("cart-list");
                 cartList.innerHTML = null;
 
+                var subTotal = 0;
+                var taxes = 0;
+                var shipping = 0;
+
                 cart.forEach(function(product) {
                     var li = document.createElement("li");
                     li.innerHTML = `${product.title} - $${product.price}`;
+                    subTotal += product.price;
 
                     cartList.appendChild(li);
                 });
 
+                taxes = subTotal * .1;
+
+                if (subTotal >= 35) {
+                    shipping = 0;
+                }
+                else {
+                    shipping = 5;
+                }
+
+                var grandTotal = subTotal + taxes + shipping;
+
+                var subTotalLabel = document.getElementById("subtotal");
+                var taxesLabel = document.getElementById("tax");
+                var shippingLabel = document.getElementById("shipping");
+                var grandTotalLabel = document.getElementById("grandTotal");
+
+                subTotalLabel.innerHTML = `$${subTotal}`;
+                taxesLabel.innerHTML = `$${taxes}`;
+                shippingLabel.innerHTML = `$${shipping}`;
+                grandTotalLabel.innerHTML = `$${grandTotal}`;
             }
-            
         </script>
     </body>
 </html>
